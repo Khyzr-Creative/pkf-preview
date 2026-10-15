@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Private preview</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23F26A2C'/%3E%3C/svg%3E">
+<link rel="preload" href="/pkf-preview/f/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.className = 'js is-checking';</script>
+<style>
+/* The sign-in: the showcase's face and colours, and nothing that names whose work is behind it. */
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url(/pkf-preview/f/archivo.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root {
+  --cream: #FBF2E7; --ink: #141210; --ink-2: #5E554C; --tangerine: #F26A2C; --cobalt: #2448C8; --err: #B42318;
+  --line: rgba(20, 18, 16, .2); --face: "Archivo", "Helvetica Neue", Arial, sans-serif; --gutter: clamp(20px, 4.2vw, 64px);
+  --ease: cubic-bezier(.16, 1, .3, 1); color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--cream); color: var(--ink); -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100svh; display: grid; font-family: var(--face); font-size: 1.0625rem; line-height: 1.55; font-stretch: 100%; caret-color: var(--cobalt); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; border-radius: 4px; }
+::selection { background: var(--tangerine); color: var(--ink); }
+
+/* The statement on the left, the form on the right, standing on one line. */
+.gate { width: min(100% - 2 * var(--gutter), 1280px); margin-inline: auto; padding-block: clamp(48px, 8vw, 120px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 32px); align-content: center; align-items: end; row-gap: 56px; }
+.gate__say { grid-column: 1 / span 6; }
+.gate__form, .gate__note { grid-column: 8 / -1; }
+.gate h1 { margin: 0; font-size: clamp(3rem, 1.6rem + 5.6vw, 6.5rem); line-height: .9; font-weight: 800; font-stretch: 125%; letter-spacing: -.025em; }
+.gate h1 span { display: block; }
+.gate__lead { margin: 22px 0 0; max-width: 26em; color: var(--ink-2); font-size: clamp(1.125rem, 1.02rem + .35vw, 1.3125rem); line-height: 1.45; text-wrap: pretty; }
+.gate__dot { display: block; width: 22px; height: 22px; margin-bottom: 28px; border-radius: 50%; background: var(--tangerine); }
+html:not(.js) .gate__form { display: none; }
+html.is-checking .gate__form { visibility: hidden; }
+.gate__note { margin: 0; color: var(--ink-2); }
+html.js .gate__note--nojs { display: none; }
+.gate__note[hidden] { display: none; }
+
+/* Label above its answer, a rule under each that darkens in use. */
+.fields { display: grid; gap: 22px; }
+.field { display: grid; gap: 6px; padding-bottom: 10px; border-bottom: 1.5px solid var(--line); transition: border-color .3s var(--ease); }
+.field__label { font-size: .875rem; font-weight: 650; }
+.field__input { width: 100%; min-width: 0; margin: 0; padding: 4px 0; border: 0; border-radius: 0; background: none; color: var(--ink); outline: 0; appearance: none; -webkit-appearance: none; font: 500 1.25rem/1.3 var(--face); }
+.field__input::placeholder { color: var(--ink-2); opacity: 1; font-weight: 400; }
+.field__input:-webkit-autofill { -webkit-text-fill-color: var(--ink); box-shadow: 0 0 0 100px var(--cream) inset; caret-color: var(--cobalt); }
+@media (hover: hover) and (pointer: fine) { .field:hover { border-bottom-color: rgba(20, 18, 16, .45); } }
+.field:focus-within { border-bottom-color: var(--ink); }
+.field:has(.field__input:focus-visible) { border-bottom-color: var(--cobalt); }
+.field.field--error, .field.field--error:has(.field__input:focus-visible) { border-bottom-color: var(--err); }
+.field__error { display: flex; gap: .55em; align-items: flex-start; margin: 4px 0 0; color: var(--err); font-weight: 600; font-size: .875rem; line-height: 1.35; }
+.field__error::before { content: "!"; flex: none; width: 1.3em; height: 1.3em; display: grid; place-items: center; background: var(--err); color: var(--cream); border-radius: 50%; font-size: .8em; line-height: 1; }
+.field__error:empty { display: none; }
+
+/* One thing that is on or off: an empty circle, or ink with a tick in it. */
+.check { position: relative; display: inline-grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; margin-top: 26px; cursor: pointer; -webkit-tap-highlight-color: transparent; font-size: .9375rem; line-height: 1.4; }
+.check__input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.check__box { position: relative; width: 22px; height: 22px; margin-top: -.06em; border: 1.5px solid var(--ink); border-radius: 50%; transition: background-color .25s var(--ease); }
+.check__box::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 5.5px; margin: -4.5px 0 0 -5px; border: solid var(--cream); border-width: 0 0 2px 2px; transform: rotate(-45deg) scale(0); transition: transform .25s var(--ease); }
+.check__input:checked + .check__box { background: var(--ink); }
+.check__input:checked + .check__box::after { transform: rotate(-45deg) scale(1); }
+.check__input:focus-visible + .check__box { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+@media (hover: none), (pointer: coarse) { .check::after { content: ""; position: absolute; inset: 50% 0 auto; height: 44px; transform: translateY(-50%); } }
+
+/* The button: ink, filled with tangerine in hand. */
+.btn { position: relative; display: inline-flex; align-items: center; gap: 12px; min-height: 56px; margin-top: 32px; padding: 0 26px 0 30px; appearance: none; cursor: pointer; -webkit-tap-highlight-color: transparent; border: 0; border-radius: 999px; background: var(--ink); color: var(--cream); font: 650 1.0625rem/1 var(--face); white-space: nowrap; transition: background-color .3s var(--ease), color .3s var(--ease), transform .12s linear; }
+.btn svg { width: 22px; height: 22px; transition: transform .45s var(--ease); }
+@media (hover: hover) and (pointer: fine) { .btn:hover { background: var(--tangerine); color: var(--ink); } .btn:hover svg { transform: translateX(4px); } }
+.btn:active { background: var(--tangerine); color: var(--ink); transform: scale(.97); }
+.btn[aria-disabled="true"] { pointer-events: none; background: none; color: var(--ink-2); box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn[aria-disabled="true"] svg { display: none; }
+
+/* Opened: the tangerine rises over the screen, and the work is behind it. */
+.cross { position: fixed; inset: 0; z-index: 9; background: var(--tangerine); clip-path: inset(100% 0 0 0); pointer-events: none; }
+.is-open .cross { clip-path: inset(0 0 0 0); transition: clip-path .5s var(--ease); }
+
+@media (max-width: 899px) {
+  .gate { align-items: start; align-content: start; row-gap: 44px; }
+  .gate__say, .gate__form, .gate__note { grid-column: 1 / -1; }
+  .gate__form { max-width: 34rem; }
+}
+@media (max-width: 599px) and (max-height: 640px) { .gate { padding-block: 28px; row-gap: 28px; } .gate__dot { margin-bottom: 18px; } }
+@media (min-width: 600px) and (max-width: 899px) and (max-height: 480px) {
+  .gate { padding-block: 24px; align-items: end; align-content: center; }
+  .gate__say { grid-column: 1 / span 6; }
+  .gate__form, .gate__note { grid-column: 7 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 1ms !important; } .cross { display: none; } }
+</style>
+</head>
+<body>
+<main class="gate">
+  <div class="gate__say">
+    <span class="gate__dot" aria-hidden="true"></span>
+    <h1><span>Private</span> <span>preview</span></h1>
+    <p class="gate__lead">This page opens with the password you were sent.</p>
+  </div>
+  <form class="gate__form" id="gate" autocomplete="on" novalidate>
+    <div class="fields">
+      <label class="field"><span class="field__label">Name</span><input class="field__input" id="who" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Any name works"></label>
+      <label class="field" id="pw-field"><span class="field__label">Password</span><input class="field__input" id="pw" name="password" type="password" autocomplete="current-password" enterkeyhint="go" required aria-describedby="msg"><p class="field__error" id="msg" role="alert"></p></label>
+    </div>
+    <div><label class="check"><input class="check__input" id="keep" type="checkbox" checked><span class="check__box" aria-hidden="true"></span><span>Keep me signed in on this device</span></label></div>
+    <button class="btn" id="go" type="submit"><span id="go-words">Open the preview</span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 12h16.5M13.5 5.5 20 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </form>
+  <p class="gate__note gate__note--nojs">This preview needs JavaScript to open.</p>
+  <p class="gate__note" id="cant" hidden>This window can’t open the preview. Try a regular (not private) window in Chrome, Edge, Safari or Firefox.</p>
+</main>
+<div class="cross" aria-hidden="true"></div>
+<script>
+(function () {
+  'use strict';
+  var C = { base: '/pkf-preview/', salt: '7sCPNpcUZgtpTk0IXSmDVw==', iter: 600000, home: 'showcase/' };
+  // Other previews share this site's storage: this one's key and its count of tries are kept under its own address.
+  var K = 'k:' + C.base, TRIES = 'tries:' + C.base;
+  var root = document.documentElement, $ = function (s) { return document.querySelector(s); };
+  var form = $('#gate'), msg = $('#msg'), btn = $('#go'), words = $('#go-words'), pw = $('#pw');
+
+  // Where to go once it is open: the address that was asked for, or the showcase.
+  var q = new URLSearchParams(location.search);
+  var here = location.pathname.indexOf(C.base) === 0 ? location.pathname.slice(C.base.length) : '';
+  var deep = here !== '' && here !== 'index.html' && here !== '404.html';
+  var next = deep ? here + location.search + location.hash : (q.get('next') || C.home);
+  if (/^[a-z][a-z0-9+.-]*:|^\/|\\/i.test(next)) next = C.home;
+
+  function cant() { root.classList.remove('is-checking'); form.hidden = true; $('#cant').hidden = false; }
+  if (!('serviceWorker' in navigator) || !window.crypto || !crypto.subtle || !window.indexedDB) return cant();
+
+  // The key is kept in this browser, never the password.
+  function db() { return new Promise(function (yes, no) { var r = indexedDB.open('preview', 1); r.onupgradeneeded = function () { r.result.createObjectStore('kv'); }; r.onsuccess = function () { yes(r.result); }; r.onerror = function () { no(r.error); }; }); }
+  function tx(mode, work) { return db().then(function (d) { return new Promise(function (yes, no) { var t = d.transaction('kv', mode), out = work(t.objectStore('kv')); t.oncomplete = function () { yes(out && out.result); }; t.onerror = function () { no(t.error); }; }); }); }
+  var kept = { get: function () { return tx('readonly', function (s) { return s.get(K); }); }, put: function (v) { return tx('readwrite', function (s) { return s.put(v, K); }); }, drop: function () { return tx('readwrite', function (s) { return s.delete(K); }); } };
+
+  function bytes(b64) { return Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); }); }
+  // Does this key open the list of what is here? true, false, or it throws when the list cannot be fetched.
+  function opens(key) {
+    return fetch(C.base + 'm.bin', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('unreachable'); return r.arrayBuffer(); }).then(function (buf) {
+      var b = new Uint8Array(buf);
+      return crypto.subtle.decrypt({ name: 'AES-GCM', iv: b.subarray(0, 12) }, key, b.subarray(12)).then(function () { return true; }, function () { return false; });
+    });
+  }
+  var worker = navigator.serviceWorker.register(C.base + 'sw.js', { scope: C.base }).then(function () { return navigator.serviceWorker.ready; });
+
+  function enter() {
+    // back at this sign-in three times within a few seconds, key in hand: this window cannot keep the worker
+    var now = Date.now(), t = { at: 0, n: 0 };
+    try { t = JSON.parse(sessionStorage.getItem(TRIES)) || t; } catch (e) {}
+    t = now - t.at < 8000 ? { at: now, n: t.n + 1 } : { at: now, n: 1 };
+    try { sessionStorage.setItem(TRIES, JSON.stringify(t)); } catch (e) {}
+    if (t.n > 2) return cant();
+    return worker.then(function (reg) { if (reg.active) reg.active.postMessage('fresh'); location.replace(C.base + next); });
+  }
+  function show(text) { root.classList.remove('is-checking'); if (text) say(text); pw.focus(); }
+  function say(text) { msg.textContent = text; $('#pw-field').classList.toggle('field--error', !!text); busy(false); }
+  // While it is opening the button keeps the width it had, read before its words change to the shorter ones.
+  function busy(on) { btn.style.minWidth = on ? getComputedStyle(btn).width : ''; btn.setAttribute('aria-disabled', on ? 'true' : 'false'); words.textContent = on ? 'Opening' : 'Open the preview'; }
+
+  if (q.has('out')) { kept.drop().then(function () { return worker; }).then(function (reg) { if (reg.active) reg.active.postMessage('fresh'); }).catch(function () {}).then(function () { show(''); }); }
+  else kept.get().then(function (rec) {
+    if (!rec || (rec.exp && rec.exp < Date.now())) return false;
+    return opens(rec.key);
+  }).then(function (ok) { return ok ? enter() : show(''); }).catch(function () { show(''); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (btn.getAttribute('aria-disabled') === 'true') return;
+    if (!pw.value) return say('Enter the password to open the preview.');
+    msg.textContent = ''; busy(true);
+    crypto.subtle.importKey('raw', new TextEncoder().encode(pw.value), 'PBKDF2', false, ['deriveKey']).then(function (base) {
+      return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: bytes(C.salt), iterations: C.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    }).then(function (key) {
+      return opens(key).then(function (ok) {
+        if (!ok) { say('That password doesn’t open this preview. Check it and try again.'); pw.select(); return; }
+        return kept.put({ key: key, exp: $('#keep').checked ? 0 : Date.now() + 12 * 3600 * 1000 }).then(function () {
+          try { sessionStorage.removeItem(TRIES); } catch (e) {}
+          root.classList.add('is-open');
+          var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          setTimeout(enter, still ? 0 : 480);
+        });
+      });
+    }).catch(function () { say('The preview couldn’t be reached. Check the connection and try again.'); });
+  });
+})();
+</script>
+</body>
+</html>
