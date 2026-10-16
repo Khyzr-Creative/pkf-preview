@@ -1,7 +1,7 @@
 /* The preview's doorkeeper. Every address under this folder is answered here: the sealed file that holds
    it is fetched, opened with the key this browser keeps, and handed to the page as if it had been
-   served plainly. With no key, a page is sent to the sign-in and anything else is refused. The Pomoroi preview's worker
-   (project-pomoroi, homepage/stage/), with this preview's key and cache kept under its own address. */
+   served plainly. With no key, a page is sent to the sign-in and anything else is refused. This preview's key and
+   its cache are kept under its own address. */
 'use strict';
 var BASE = new URL(self.registration.scope).pathname;
 var PLAIN = { '': 1, 'index.html': 1, '404.html': 1, 'sw.js': 1, 'm.bin': 1, 'robots.txt': 1, 'favicon.ico': 1 };
